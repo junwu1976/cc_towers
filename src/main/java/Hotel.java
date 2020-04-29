@@ -28,7 +28,9 @@ public class Hotel {
     }
 
     public void checkInGuest(Bedroom bedroom, Guest guest) {
-        bedroom.addAGuest(guest);
+        if(0 == bedroom.numberOfGuests()){
+            bedroom.addAGuest(guest);
+        }
     }
 
     public void checkOutGuest(Bedroom bedroom, Guest guest) {
@@ -39,9 +41,9 @@ public class Hotel {
         return bookings.size();
     }
 
-    public void bookRoom(Bedroom bedroom, int numOfNights) {
+    public Booking bookRoom(Bedroom bedroom, int numOfNights) {
         Booking booking = new Booking(bedroom, numOfNights);
-        bookings.add(booking);
+        return booking;
     }
 
     public void addDiningRoom(DiningRoom diningroom) {
@@ -50,5 +52,26 @@ public class Hotel {
 
     public DiningRoom getDiningRoomByName(String name) {
         return diningRoomByName.get(name);
+    }
+
+
+    public int getVacentBedRoomCount() {
+        int vacentBedRoomCount = 0;
+        for (Bedroom bedroom:bedrooms){
+            if(0 == bedroom.numberOfGuests()){
+                vacentBedRoomCount ++;
+            }
+        }
+        return vacentBedRoomCount;
+    }
+
+    public ArrayList<Bedroom> getVacentBedRooms() {
+        ArrayList<Bedroom> vacantBedRooms = new ArrayList<Bedroom>();
+        for(Bedroom bedroom: this.bedrooms){
+            if(0 == bedroom.numberOfGuests()){
+                vacantBedRooms.add(bedroom);
+            }
+        }
+        return vacantBedRooms;
     }
 }
